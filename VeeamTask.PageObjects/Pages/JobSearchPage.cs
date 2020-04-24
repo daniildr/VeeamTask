@@ -10,7 +10,7 @@ namespace VeeamTask.PageObjects.Pages
     {
         public JobSearchPage(WebPageAttribute pageAttribute, string domain) : base(pageAttribute, domain) {  }
 
-        [FindBy(XPath = "//h3[contains(text(), 'jobs found')]")]
+        [FindBy(XPath = "//h3[contains(text(), 'found')]")]
         public TextElement JobsCounterElement { protected get; set; }
 
         [FindBy(XPath = "//*[@id='country-element']//div[contains(@class, 'selecter ')]")]
@@ -22,7 +22,9 @@ namespace VeeamTask.PageObjects.Pages
         [FindBy(XPath = "//div[@class='container']/div[contains(@class, 'vacancies-blocks')]")]
         public FoundJobsTable FoundJobsTable { get; set; }
 
-        public int JobsCounter => int.Parse(JobsCounterElement.Text.Replace("jobs found", ""));
+        public int JobsCounter => 
+            int.Parse(
+                JobsCounterElement.Text.Substring(0, JobsCounterElement.Text.IndexOf('j')));
 
         [FindBy(XPath = "//a[contains(@class, 'load-more-button')]")]
         public Button ShowMoreButton { get; set; }

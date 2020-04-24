@@ -12,16 +12,16 @@ namespace VeeamTask.UITests.Hooks
     [Binding]
     public class BaseClass
     {
-        private readonly ScenarioContext _scenarioContext;
-        private readonly IObjectContainer _objectContainer;
+        protected ScenarioContext ScenarioContext;
+        protected IObjectContainer ObjectContainer;
         private static ChromeOptions _chromeOptions;
 
         public BaseClass(IObjectContainer objectContainer, ScenarioContext scenarioContext)
         {
-            _objectContainer = objectContainer;
-            _scenarioContext = scenarioContext;
+            ObjectContainer = objectContainer;
+            ScenarioContext = scenarioContext;
         }
-
+        
         [SetUp]
         [BeforeScenario(Order = 0)]
         [Scope(Tag = "UI")]
@@ -36,14 +36,12 @@ namespace VeeamTask.UITests.Hooks
             };
             driverContext.Wait = new WebDriverWait(driverContext.Driver, TimeSpan.FromMilliseconds(12000));
 
-            _objectContainer.RegisterInstanceAs(driverContext, typeof(IDriverContext));
-            _objectContainer.RegisterInstanceAs(driverContext, typeof(DriverContext));
-            _objectContainer.RegisterInstanceAs(driverContext.Driver);
+            ObjectContainer.RegisterInstanceAs(driverContext, typeof(IDriverContext), dispose: true);
+            ObjectContainer.RegisterInstanceAs(driverContext, typeof(DriverContext), dispose: true);
 
-            DriverContextHook.ConfigureHook(_objectContainer);
+            DriverContextHook.ConfigureHook(ObjectContainer);
         }
 
-        [TearDown]
         [AfterScenario(Order = 0)]
         [Scope(Tag = "UI")]
         public static void KillAllRunWebDrivers(IObjectContainer _objectContainer)

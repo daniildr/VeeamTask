@@ -37,13 +37,20 @@ namespace VeeamTask.UITests.Steps
 
         [When(@"I set country - (.*)")]
         public void WhenISetCountry_(string country) =>
-            _careerVeeam.JobSearchPage.CountrySelectElement.SelectItemByName(country);
+            _careerVeeam.JobSearchPage.CountrySelectElement.SelectItemByValue(country);
 
         [When(@"I set languages")]
         public void WhenISetLanguages(Table languageTable)
         {
             var languageArr = languageTable.Rows[0].Values.ToArray();
-            _careerVeeam.JobSearchPage.LanguagesSelectElement.SelectItemByName(languageArr);
+            _careerVeeam.JobSearchPage.LanguagesSelectElement.SelectItemByValue(languageArr);
+        }
+
+        [When(@"I unset languages")]
+        public void WhenIUnsetLanguages(Table languageTable)
+        {
+            var languageArr = languageTable.Rows[0].Values.ToArray();
+            _careerVeeam.JobSearchPage.LanguagesSelectElement.UnselectItemByValue(languageArr);
         }
 
         [When(@"I click the show more button")]

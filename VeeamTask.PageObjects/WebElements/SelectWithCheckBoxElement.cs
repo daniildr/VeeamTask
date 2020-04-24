@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using OpenQA.Selenium;
 using VeeamTask.PageEngine.WebElements;
+using VeeamTask.WebDriverDecorator.Extensions;
 
 namespace VeeamTask.PageObjects.WebElements
 {
@@ -15,10 +16,10 @@ namespace VeeamTask.PageObjects.WebElements
 
         public SelectWithCheckBoxElement(By byLocator) : base(byLocator) { }
 
-        public void SelectItemByName(params string[] itemNames) =>
+        public void SelectItemByValue(params string[] itemNames) =>
             ClickOnItems(itemNames);
 
-        public void UnselectItemByName(params string[] itemNames) =>
+        public void UnselectItemByValue(params string[] itemNames) =>
             ClickOnItems(itemNames);
 
         private void ClickOnItems(params string[] itemNames)

@@ -13,12 +13,12 @@ namespace VeeamTask.PageObjects.WebElements
         /// <summary>
         /// Method for set value of custom selector
         /// </summary>
-        /// <param name="itemName">Item name or value</param>
-        public void SelectItemByName(string itemName)
+        /// <param name="itemValue">Item name or value</param>
+        public void SelectItemByValue(string itemValue)
         {
             WebElement.Click();
 
-            DropdownElement.FindElement(GetItemLocator(itemName)).Click();
+            DropdownElement.FindElement(GetItemLocator(itemValue)).Click();
         }
 
         protected By GetItemLocator(string text) =>
