@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeeamTask.MonitorApp", "VeeamTask.MonitorApp\VeeamTask.MonitorApp.csproj", "{70499B42-7ED5-4834-B679-AF366315DE5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeaamTask.UITests", "VeaamTask.UITests\VeaamTask.UITests.csproj", "{7C664391-4150-4454-83FC-D2124496673C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeeamTask.PageEngine", "VeeamTask.PageEngine\VeeamTask.PageEngine.csproj", "{A808F79B-9B7F-48CA-A1C7-98BF599B8BEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeeamTask.PageObjects", "VeeamTask.PageObjects\VeeamTask.PageObjects.csproj", "{FE090ED9-707D-43E1-A42B-803770C2F6ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeeamTask.WebDriverDecorator", "VeeamTask.WebDriverDecorator\VeeamTask.WebDriverDecorator.csproj", "{E3071389-9D71-4923-A98C-73E0013B078D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70499B42-7ED5-4834-B679-AF366315DE5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70499B42-7ED5-4834-B679-AF366315DE5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70499B42-7ED5-4834-B679-AF366315DE5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70499B42-7ED5-4834-B679-AF366315DE5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C664391-4150-4454-83FC-D2124496673C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C664391-4150-4454-83FC-D2124496673C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C664391-4150-4454-83FC-D2124496673C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C664391-4150-4454-83FC-D2124496673C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A808F79B-9B7F-48CA-A1C7-98BF599B8BEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A808F79B-9B7F-48CA-A1C7-98BF599B8BEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A808F79B-9B7F-48CA-A1C7-98BF599B8BEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A808F79B-9B7F-48CA-A1C7-98BF599B8BEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE090ED9-707D-43E1-A42B-803770C2F6ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE090ED9-707D-43E1-A42B-803770C2F6ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE090ED9-707D-43E1-A42B-803770C2F6ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE090ED9-707D-43E1-A42B-803770C2F6ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3071389-9D71-4923-A98C-73E0013B078D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3071389-9D71-4923-A98C-73E0013B078D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3071389-9D71-4923-A98C-73E0013B078D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3071389-9D71-4923-A98C-73E0013B078D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {055AC87A-1C1C-4A70-B0E3-1E3F73514FAF}
+	EndGlobalSection
+EndGlobal
