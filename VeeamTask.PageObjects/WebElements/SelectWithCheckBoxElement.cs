@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using OpenQA.Selenium;
 using VeeamTask.PageEngine.WebElements;
-using VeeamTask.WebDriverDecorator.Extensions;
 
 namespace VeeamTask.PageObjects.WebElements
 {

@@ -1,12 +1,9 @@
 ﻿using System.Linq;
 using BoDi;
 using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
 using VeeamTask.PageObjects.Sites;
 using VeeamTask.UITests.Helpers;
-using VeeamTask.WebDriverDecorator;
 
 namespace VeeamTask.UITests.Steps
 {

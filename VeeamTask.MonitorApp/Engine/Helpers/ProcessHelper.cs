@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Management;
 
 namespace VeeamTask.MonitorApp.Engine.Helpers

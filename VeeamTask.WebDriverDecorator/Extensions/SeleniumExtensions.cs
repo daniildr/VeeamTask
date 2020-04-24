@@ -1,8 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq.Expressions;
-using OpenQA.Selenium;
-using VeeamTask.WebDriverDecorator.Exceptions;
+﻿using OpenQA.Selenium;
 
 namespace VeeamTask.WebDriverDecorator.Extensions
 {
