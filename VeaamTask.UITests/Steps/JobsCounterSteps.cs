@@ -1,0 +1,62 @@
+﻿using BoDi;
+using NUnit.Framework;
+using TechTalk.SpecFlow;
+using VeeamTask.PageObjects.Sites;
+using VeeamTask.UITests.Helpers;
+
+namespace VeeamTask.UITests.Steps
+{
+    [Binding]
+    public class JobsCounterSteps
+    {
+        private readonly ScenarioContext _scenarioContext;
+        private readonly CareerVeeam _careerVeeam;
+
+        public JobsCounterSteps(IObjectContainer objectContainer, ScenarioContext scenarioContext)
+        {
+            _scenarioContext = scenarioContext;
+            _careerVeeam = objectContainer.Resolve<CareerVeeam>();
+        }
+
+        [Given(@"I have opened the career page")]
+        public void GivenIHaveOpenedTheCareerPage()
+        {
+           _careerVeeam.JobSearchPage.Open();
+
+           if (_careerVeeam.JobSearchPage.CheckAfterOpen == false)
+               Assert.Fail($"Page {_careerVeeam.JobSearchPage.Title} ({_careerVeeam.JobSearchPage.Url}) is not opened");
+        }
+        
+        [When(@"I remember the number of vacancies")]
+        public void WhenIRememberTheNumberOfVacancies() =>
+            _scenarioContext.SaveCountOfFoundJobs(_careerVeeam.JobSearchPage.JobsCounter);
+
+        [When(@"I set country - (.*)")]
+        public void WhenISetCountry_(string country)
+        {
+            
+        }
+
+        [When(@"I set languages")]
+        public void WhenISetLanguages(Table languageTable)
+        {
+            
+        }
+
+        [When(@"I click the show more button")]
+        public void WhenIClickTheShowMoreButton() =>
+            _careerVeeam.JobSearchPage.ShowMoreButton.Click();
+
+        [Then(@"Expected number of vacancies is equal to the initial")]
+        public void ThenExpectedNumberOfVacanciesIsEqualToTheInitial() =>
+            Assert.AreEqual(_scenarioContext.GetSavedCountOfFoundJobs(), _careerVeeam.JobSearchPage.JobsCounter);
+        
+        [Then(@"Expected jobs count equal - (.*)")]
+        public void ThenExpectedJobsCountEqual_(int jobsCount) =>
+            Assert.AreEqual(jobsCount, _careerVeeam.JobSearchPage.JobsCounter);
+
+        [Then(@"Actual jobs count equal - (.*)")]
+        public void ThenActualJobsCountEqual_(int jobsCount) =>
+            Assert.AreEqual(jobsCount, _careerVeeam.JobSearchPage.FoundJobsTable.JobsItemCollection.Count);
+    }
+}

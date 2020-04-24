@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Sites\" />
-    <Folder Include="Pages\" />
+    <ProjectReference Include="..\VeeamTask.PageEngine\VeeamTask.PageEngine.csproj" />
   </ItemGroup>
 
 </Project>

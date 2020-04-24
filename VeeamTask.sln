@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeeamTask.MonitorApp", "VeeamTask.MonitorApp\VeeamTask.MonitorApp.csproj", "{70499B42-7ED5-4834-B679-AF366315DE5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeaamTask.UITests", "VeaamTask.UITests\VeaamTask.UITests.csproj", "{7C664391-4150-4454-83FC-D2124496673C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeeamTask.UITests", "VeaamTask.UITests\VeeamTask.UITests.csproj", "{7C664391-4150-4454-83FC-D2124496673C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeeamTask.PageEngine", "VeeamTask.PageEngine\VeeamTask.PageEngine.csproj", "{A808F79B-9B7F-48CA-A1C7-98BF599B8BEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeeamTask.PageEngine", "VeeamTask.PageEngine\VeeamTask.PageEngine.csproj", "{A808F79B-9B7F-48CA-A1C7-98BF599B8BEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeeamTask.PageObjects", "VeeamTask.PageObjects\VeeamTask.PageObjects.csproj", "{FE090ED9-707D-43E1-A42B-803770C2F6ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeeamTask.PageObjects", "VeeamTask.PageObjects\VeeamTask.PageObjects.csproj", "{FE090ED9-707D-43E1-A42B-803770C2F6ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeeamTask.WebDriverDecorator", "VeeamTask.WebDriverDecorator\VeeamTask.WebDriverDecorator.csproj", "{E3071389-9D71-4923-A98C-73E0013B078D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeeamTask.WebDriverDecorator", "VeeamTask.WebDriverDecorator\VeeamTask.WebDriverDecorator.csproj", "{E3071389-9D71-4923-A98C-73E0013B078D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

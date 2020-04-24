@@ -1,13 +1,15 @@
 ﻿using System;
 using BoDi;
+using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
 using VeeamTask.WebDriverDecorator;
 using VeeamTask.WebDriverDecorator.Interfaces;
 
-namespace VeaamTask.UITests.Hooks
+namespace VeeamTask.UITests.Hooks
 {
+    [Binding]
     public class BaseClass
     {
         private readonly ScenarioContext _scenarioContext;
@@ -20,16 +22,9 @@ namespace VeaamTask.UITests.Hooks
             _scenarioContext = scenarioContext;
         }
 
+        [SetUp]
         [BeforeScenario(Order = 0)]
-        [AfterScenario, Scope(Tag = "Category:UI")]
-        public static void KillAllRunWebDrivers(IObjectContainer _objectContainer)
-        {
-            var driver = (DriverContext)_objectContainer.Resolve(typeof(DriverContext));
-            driver.KillAllRunWebDrivers();
-            DriverContextHook.CleanUp();
-        }
-
-        [BeforeScenario(Order = 99), Scope(Tag = "Category:UI")]
+        [Scope(Tag = "UI")]
         public void SetDriver()
         {
             _chromeOptions = new ChromeOptions();
@@ -46,6 +41,24 @@ namespace VeaamTask.UITests.Hooks
             _objectContainer.RegisterInstanceAs(driverContext.Driver);
 
             DriverContextHook.ConfigureHook(_objectContainer);
+        }
+
+        [TearDown]
+        [AfterScenario(Order = 0)]
+        [Scope(Tag = "UI")]
+        public static void KillAllRunWebDrivers(IObjectContainer _objectContainer)
+        {
+            var driver = (DriverContext)_objectContainer.Resolve(typeof(DriverContext));
+            driver.KillAllRunWebDrivers();
+            DriverContextHook.CleanUp();
+        }
+
+        [BeforeStep(Order = 99)] 
+        [AfterStep(Order = 99)]
+        [Scope(Tag = "UI")]
+        public static void SeleniumPause()
+        {
+            System.Threading.Thread.Sleep(800);
         }
     }
 }

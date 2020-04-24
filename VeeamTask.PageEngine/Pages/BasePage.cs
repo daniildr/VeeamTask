@@ -57,7 +57,11 @@ namespace VeeamTask.PageEngine.Pages
                     try
                     {
                         property.SetValue(this,
-                            constructorInfo.Invoke(new object[] { locatorsTuple.Find(i => i.Item1 == property.Name).Item2 }));
+                            constructorInfo.Invoke(
+                                new object[]
+                                {
+                                    locatorsTuple.Find(i => i.Item1 == property.Name).Item2
+                                }));
                     }
                     catch (ArgumentException)
                     {
