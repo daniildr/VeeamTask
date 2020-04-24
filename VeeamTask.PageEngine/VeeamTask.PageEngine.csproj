@@ -5,11 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Attributes\" />
     <Folder Include="Exceptions\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Sites\" />
-    <Folder Include="Pages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VeeamTask.WebDriverDecorator\VeeamTask.WebDriverDecorator.csproj" />
   </ItemGroup>
 
 </Project>

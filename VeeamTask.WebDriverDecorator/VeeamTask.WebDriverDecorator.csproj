@@ -4,4 +4,13 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="BoDi" Version="1.4.1" />
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VeeamTask.MonitorApp\VeeamTask.MonitorApp.csproj" />
+  </ItemGroup>
+
 </Project>
