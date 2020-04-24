@@ -1,8 +1,12 @@
-﻿using BoDi;
+﻿using System.Linq;
+using BoDi;
 using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
 using VeeamTask.PageObjects.Sites;
 using VeeamTask.UITests.Helpers;
+using VeeamTask.WebDriverDecorator;
 
 namespace VeeamTask.UITests.Steps
 {
@@ -32,15 +36,14 @@ namespace VeeamTask.UITests.Steps
             _scenarioContext.SaveCountOfFoundJobs(_careerVeeam.JobSearchPage.JobsCounter);
 
         [When(@"I set country - (.*)")]
-        public void WhenISetCountry_(string country)
-        {
-            
-        }
+        public void WhenISetCountry_(string country) =>
+            _careerVeeam.JobSearchPage.CountrySelectElement.SelectItemByName(country);
 
         [When(@"I set languages")]
         public void WhenISetLanguages(Table languageTable)
         {
-            
+            var languageArr = languageTable.Rows[0].Values.ToArray();
+            _careerVeeam.JobSearchPage.LanguagesSelectElement.SelectItemByName(languageArr);
         }
 
         [When(@"I click the show more button")]
@@ -49,14 +52,21 @@ namespace VeeamTask.UITests.Steps
 
         [Then(@"Expected number of vacancies is equal to the initial")]
         public void ThenExpectedNumberOfVacanciesIsEqualToTheInitial() =>
-            Assert.AreEqual(_scenarioContext.GetSavedCountOfFoundJobs(), _careerVeeam.JobSearchPage.JobsCounter);
+            Assert.AreEqual(_scenarioContext.GetSavedCountOfFoundJobs(), _careerVeeam.JobSearchPage.JobsCounter,
+                $"Expected number of vacancies is not equal to the initial. " +
+                $"Expected number of vacancies is a jobs found number on the page. " +
+                $"Initial quantity was obtained from the scenario context.");
         
         [Then(@"Expected jobs count equal - (.*)")]
         public void ThenExpectedJobsCountEqual_(int jobsCount) =>
-            Assert.AreEqual(jobsCount, _careerVeeam.JobSearchPage.JobsCounter);
+            Assert.AreEqual(jobsCount, _careerVeeam.JobSearchPage.JobsCounter,
+                $"Expected number of vacancies is does not match passed in step argument. " +
+                $"Expected number of vacancies is a jobs found number on the page.");
 
         [Then(@"Actual jobs count equal - (.*)")]
         public void ThenActualJobsCountEqual_(int jobsCount) =>
-            Assert.AreEqual(jobsCount, _careerVeeam.JobSearchPage.FoundJobsTable.JobsItemCollection.Count);
+            Assert.AreEqual(jobsCount, _careerVeeam.JobSearchPage.FoundJobsTable.JobsItemCollection.Count,
+                $"Actual number of vacancies is does not match passed in step argument. " +
+                $"Actual number of vacancies is a count of job preview items on the page.");
     }
 }

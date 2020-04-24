@@ -13,6 +13,12 @@ namespace VeeamTask.PageObjects.Pages
         [FindBy(XPath = "//h3[contains(text(), 'jobs found')]")]
         public TextElement JobsCounterElement { protected get; set; }
 
+        [FindBy(XPath = "//*[@id='country-element']//div[contains(@class, 'selecter ')]")]
+        public CustomSelectElement CountrySelectElement { get; set; }
+
+        [FindBy(Id = "language")]
+        public SelectWithCheckBoxElement LanguagesSelectElement { get; set; }
+
         [FindBy(XPath = "//div[@class='container']/div[contains(@class, 'vacancies-blocks')]")]
         public FoundJobsTable FoundJobsTable { get; set; }
 
