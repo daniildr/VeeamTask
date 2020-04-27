@@ -6,11 +6,9 @@ namespace VeeamTask.PageEngine.WebElements
     {
         public new string Text => GetText();
 
-        public TextElement(By byLocator) : base(byLocator)
-        {
-        }
+        private string Value => GetTextAction();
 
-        public string Value => GetTextAction();
+        public TextElement(By byLocator) : base(byLocator) { }
 
         public virtual string GetValue() => Value;
 

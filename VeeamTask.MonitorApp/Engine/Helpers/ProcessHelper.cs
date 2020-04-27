@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Management;
 
 namespace VeeamTask.MonitorApp.Engine.Helpers
@@ -19,18 +20,37 @@ namespace VeeamTask.MonitorApp.Engine.Helpers
             }
         }
 
-        public static bool CheckProcessStart(string processName) => Process.GetProcessesByName(processName).Length > 0;
+        public static bool CheckProcessStart(string processName) => 
+            Process.GetProcessesByName(processName).Length > 0;
 
-        internal static string GetProcessCommandLine(int pid)
+        internal static void StartProcess(string processName,
+            DataReceivedEventHandler eventHandler = null, params string[] args)
         {
-            using (var searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ProcessID=" + pid))
+            var processInfo = new ProcessStartInfo(processName, string.Join(" ", args))
             {
-                using var moc = searcher.Get();
-                foreach (var mo in moc)
-                    return mo["CommandLine"].ToString();
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true
+            };
+            var process = Process.Start(processInfo);
+
+            if (eventHandler == null) return;
+
+            if (process != null)
+            {
+                process.OutputDataReceived += eventHandler;
+                process.BeginOutputReadLine();
             }
-            throw new ArgumentException("pid");
+            else
+                throw new Exception("Process not started.");
         }
+
+        internal static ManagementEventWatcher GetProcessStartWatcher() => 
+            new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStartTrace"));
+
+        internal static ManagementEventWatcher GetProcessStopWatcher() =>
+            new ManagementEventWatcher(new WqlEventQuery("SELECT * FROM Win32_ProcessStopTrace"));
 
         internal static void KillProcessTree(int pid)
         {

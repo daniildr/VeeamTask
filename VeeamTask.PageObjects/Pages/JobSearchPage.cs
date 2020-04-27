@@ -15,7 +15,7 @@ namespace VeeamTask.PageObjects.Pages
 
         public int JobsCounter =>
             int.Parse(
-                JobsCounterElement.Text.Substring(0, JobsCounterElement.Text.IndexOf('j')));
+                JobsCounterElement.GetText().Substring(0, JobsCounterElement.Text.IndexOf('j')));
 
         [ByXPath("//*[@id='country-element']//div[contains(@class, 'selecter ')]")]
         public CustomSelectElement CountrySelectElement { get; set; }

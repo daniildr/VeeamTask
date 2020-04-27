@@ -9,7 +9,6 @@ using VeeamTask.WebDriverDecorator;
 
 namespace VeeamTask.UITests.ClassicTests
 {
-    [TestFixture]
     public class JobsCounter : BaseClass
     {
         private CareerVeeam CareerVeeam { get; }
