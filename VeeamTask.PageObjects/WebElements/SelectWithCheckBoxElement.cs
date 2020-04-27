@@ -2,6 +2,7 @@
 using System.Linq;
 using OpenQA.Selenium;
 using VeeamTask.PageEngine.WebElements;
+using VeeamTask.WebDriverDecorator.Extensions;
 
 namespace VeeamTask.PageObjects.WebElements
 {
@@ -10,7 +11,7 @@ namespace VeeamTask.PageObjects.WebElements
         public ReadOnlyCollection<IWebElement> AvailableItemsCollection =>
             DropdownElement.FindElements(GetItemLocator());
 
-        private static Button ApplyButton => new Button(By.XPath("//a[contains(@class, 'submit') and contains(text(), 'Apply')]"));
+        public Button ApplyButton => new Button(By.XPath("//a[contains(@class, 'submit') and contains(text(), 'Apply')]"));
 
         public SelectWithCheckBoxElement(By byLocator) : base(byLocator) { }
 
@@ -26,7 +27,9 @@ namespace VeeamTask.PageObjects.WebElements
 
             foreach (var name in itemNames)
             {
-                AvailableItemsCollection.First(x => x.Text == name).Click();
+                var item = AvailableItemsCollection.First(x => x.Text == name);
+                if (item.IsAttributeAvailable("disabled"))
+                    item.Click();
             }
 
             ApplyButton.Click();

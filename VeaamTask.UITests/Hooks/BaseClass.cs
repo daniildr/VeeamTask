@@ -44,9 +44,9 @@ namespace VeeamTask.UITests.Hooks
 
         [AfterScenario(Order = 0)]
         [Scope(Tag = "UI")]
-        public static void KillAllRunWebDrivers(IObjectContainer _objectContainer)
+        public static void KillAllRunWebDrivers(IObjectContainer objectContainer)
         {
-            var driver = (DriverContext)_objectContainer.Resolve(typeof(DriverContext));
+            var driver = (DriverContext)objectContainer.Resolve(typeof(DriverContext));
             driver.KillAllRunWebDrivers();
             DriverContextHook.CleanUp();
         }
@@ -54,9 +54,7 @@ namespace VeeamTask.UITests.Hooks
         [BeforeStep(Order = 99)] 
         [AfterStep(Order = 99)]
         [Scope(Tag = "UI")]
-        public static void SeleniumPause()
-        {
+        public static void SeleniumPause() =>
             System.Threading.Thread.Sleep(800);
-        }
     }
 }

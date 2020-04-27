@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BoDi;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 using VeeamTask.PageObjects.Sites;
 using VeeamTask.UITests.Helpers;
@@ -51,8 +53,17 @@ namespace VeeamTask.UITests.Steps
         }
 
         [When(@"I click the show more button")]
-        public void WhenIClickTheShowMoreButton() =>
-            _careerVeeam.JobSearchPage.ShowMoreButton.Click();
+        public void WhenIClickTheShowMoreButton()
+        {
+            try
+            {
+                _careerVeeam.JobSearchPage.ShowMoreButton.Click();
+            }
+            catch (ElementNotInteractableException)
+            {
+                // Ignore. Because sometimes this button may not be active
+            }
+        }
 
         [Then(@"Expected number of vacancies is equal to the initial")]
         public void ThenExpectedNumberOfVacanciesIsEqualToTheInitial() =>
