@@ -1,19 +1,19 @@
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
+using System.IO;
+using System.Reflection;
 using VeeamTask.MonitorApp.Engine.Helpers;
 using Xunit;
 
 namespace VeeamTask.MonitorApp.Tests
 {
-    public class Tests
+    public class Tests : IDisposable
     {
-        private MonitorApp MonitorApp;
         private string Output;
 
         public Tests()
         {
-            MonitorApp = new MonitorApp();
+            
         }
 
         [Theory]
@@ -28,29 +28,28 @@ namespace VeeamTask.MonitorApp.Tests
         public void ArgumentFormatExceptionsTest(params string[] args) =>
             Assert.Throws<FormatException>(() => MonitorApp.Main(args));
 
-        //[Theory]
-        //[InlineData("cmd", "1", "1")]
-        //public void CheckProcessAlreadyStarted(params string[] args)
-        //{
-        //    var eventHandler = new DataReceivedEventHandler((sender, e) => Output += e.Data);
+        [Fact]
+        public void CheckProcessAlreadyStarted()
+        {
+            var eventHandler = new DataReceivedEventHandler((sender, e) => Output += e.Data);
 
-        //    ProcessHelper.StartProcess("cmd.exe");
-        //    System.Threading.Thread.Sleep(2000);
-        //    ProcessHelper.StartProcess();
+            var appPath = Path.Combine(Path.GetDirectoryName(Assembly.GetAssembly(typeof(ProcessHelper)).Location),
+                "VeeamTask.MonitorApp.exe").Replace(".Tests", "");
 
+            ProcessHelper.StartProcess("cmd.exe");
+            System.Threading.Thread.Sleep(2000);
+            ProcessHelper.StartProcess(appPath, eventHandler, "cmd", "1", "1");
 
-        //    var monitor = new Task(() => MonitorApp.Main(args));
-        //    monitor.Start();
-
-
-        //    //Assert.True(Console.);
-        //    var qwe = 0;
-
-        //    System.Threading.Thread.Sleep(180000);
-        //    qwe = 1;
-        //}
+            System.Threading.Thread.Sleep(120000);
+            Assert.Contains("The process is already running", Output);
+        }
 
 
-        
+        public void Dispose()
+        {
+            Output = null;
+            ProcessHelper.KillAllProcess("cmd");
+            ProcessHelper.KillAllProcess("VeeamTask.MonitorApp");
+        }
     }
 }

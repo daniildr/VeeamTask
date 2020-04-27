@@ -6,8 +6,10 @@ using VeeamTask.MonitorApp.Engine.Helpers;
 
 namespace VeeamTask.MonitorApp
 {
-    internal class MonitorApp : IDisposable
+    internal class MonitorApp
     {
+        private static readonly TimeSpan DelayTime = TimeSpan.FromSeconds(20);
+
         [NotNull] private static string _processName;
         [NotNull] private static TimeSpan _schedulerTime;
         [NotNull] private static TimeSpan _maxMinutesLife;
@@ -52,8 +54,6 @@ namespace VeeamTask.MonitorApp
             }
             startWatch.Stop();
             stopWatch.Stop();
-
-            Console.ReadLine();
         }
 
         private static void StartWatchEventArrived(object sender, EventArrivedEventArgs e)
@@ -69,7 +69,7 @@ namespace VeeamTask.MonitorApp
         {
             if (!e.NewEvent.Properties["ProcessName"].Value.ToString().Contains(_processName)) return;
 
-            _processStarTime = null;
+            CleanProcessStartTime();
             Console.WriteLine($"Process stopped: {e.NewEvent.Properties["ProcessName"].Value}. " +
                               $"Time tracking stopped.\r\n");
         }
@@ -80,12 +80,18 @@ namespace VeeamTask.MonitorApp
             {
                 while (true)
                 {
+                    // To continue, you must have information about the start time of the process
                     if (_processStarTime == null) continue;
 
+                    // If the verification time has not come, then continue monitoring
                     if (DateTime.Now - _processStarTime < _schedulerTime) continue;
 
-                    if (DateTime.Now - _processStarTime > _maxMinutesLife)
-                        KillProcessAndSendResults(_processName);
+                    // If the maximum lifetime is not reached, then continue monitoring
+                    if (DateTime.Now - _processStarTime < _maxMinutesLife) continue;
+
+                    KillProcessAndSendResults(_processName);
+                    CleanProcessStartTime();
+                    Task.Delay(DelayTime);
                 }
             });
         }
@@ -97,15 +103,11 @@ namespace VeeamTask.MonitorApp
             else
             {
                 ProcessHelper.KillAllProcess(_processName);
-                _processStarTime = null;
                 Console.Write($"Process {_processName} has been killed.\r\n");
             }
         }
 
-        public void Dispose()
-        {
-            _processName = null;
+        private static void CleanProcessStartTime() =>
             _processStarTime = null;
-        }
     }
 }
