@@ -58,6 +58,7 @@ namespace VeeamTask.UITests.ClassicTests
             SeleniumPause();
             if (jobCount > 12)
                 CareerVeeam.JobSearchPage.ShowMoreButton.Click();
+            SeleniumPause();
 
             // Assert
             Assert.AreEqual(jobCount, CareerVeeam.JobSearchPage.JobsCounter,

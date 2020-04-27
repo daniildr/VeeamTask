@@ -5,7 +5,7 @@ using VeeamTask.PageObjects.Pages;
 
 namespace VeeamTask.PageObjects.Sites
 {
-    [WebSite(Domain = "https://careers.veeam.com/")]
+    [WebSite(Domain = "https://careers.veeam.com")]
     public class CareerVeeam : BaseWebSite
     {
         [WebPage(Url = "/", Title = "Career at Veeam Software")]

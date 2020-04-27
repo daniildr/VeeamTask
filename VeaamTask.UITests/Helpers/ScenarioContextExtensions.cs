@@ -12,7 +12,7 @@ namespace VeeamTask.UITests.Helpers
             scenarioContext.Get<int>("FoundJobs");
 
         /// <summary>
-        /// Extension for TechTalk.SpecFlow.ScenarioContext. Method that checks and removes the key before adding
+        /// Extension for TechTalk.SpecFlow.ScenarioContext. Method that checks and clear the key value before adding
         /// </summary>
         /// <param name="scenarioContext">Any ScenarioContext</param>
         /// <param name="key"></param>
@@ -24,6 +24,5 @@ namespace VeeamTask.UITests.Helpers
 
             scenarioContext.Add(key, value);
         }
-
     }
 }
