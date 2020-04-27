@@ -8,7 +8,7 @@ namespace VeeamTask.MonitorApp
 {
     internal class MonitorApp
     {
-        private static readonly TimeSpan DelayTime = TimeSpan.FromSeconds(20);
+        private static readonly TimeSpan DelayTime = TimeSpan.FromSeconds(10);
 
         [NotNull] private static string _processName;
         [NotNull] private static TimeSpan _schedulerTime;
@@ -29,11 +29,12 @@ namespace VeeamTask.MonitorApp
             _schedulerTime = TimeSpan.FromMinutes(int.Parse(args[1]));
             _maxMinutesLife = TimeSpan.FromMinutes(int.Parse(args[2]));
 
+            AppDomain.CurrentDomain.ProcessExit += ProcessExit;
             Console.WriteLine("Press any key to exit. \r\n");
 
             if (ProcessHelper.CheckProcessStart(_processName))
             {
-                Console.WriteLine("The process is already running. Time control started.\r\n");
+                Console.WriteLine("The process is already running. Time control started.");
                 _processStarTime = DateTime.Now;
             }
 
@@ -62,7 +63,7 @@ namespace VeeamTask.MonitorApp
 
             _processStarTime = DateTime.Now;
             Console.WriteLine($"Process started: {e.NewEvent.Properties["ProcessName"].Value}. " +
-                              $"Time tracking started.\r\n");
+                              $"Time tracking started.");
         }
 
         private static void StopWatchEventArrived(object sender, EventArrivedEventArgs e)
@@ -71,27 +72,37 @@ namespace VeeamTask.MonitorApp
 
             CleanProcessStartTime();
             Console.WriteLine($"Process stopped: {e.NewEvent.Properties["ProcessName"].Value}. " +
-                              $"Time tracking stopped.\r\n");
+                              $"Time tracking stopped.");
+        }
+
+        private static void ProcessExit(object sender, EventArgs e)
+        {
+            CleanProcessStartTime();
+            Console.WriteLine("Application stopped. Thank you for using 'Daniil Dr .net lines'");
         }
 
         private static Task ProcessMonitoringTask()
         {
-            return new Task(() =>
+            return new Task(async () =>
             {
                 while (true)
                 {
                     // To continue, you must have information about the start time of the process
-                    if (_processStarTime == null) continue;
-
+                    if (_processStarTime == null) { await Task.Delay(DelayTime); continue; }
+                    
                     // If the verification time has not come, then continue monitoring
-                    if (DateTime.Now - _processStarTime < _schedulerTime) continue;
+                    if (DateTime.Now - _processStarTime < _schedulerTime) { await Task.Delay(DelayTime); continue; }
 
                     // If the maximum lifetime is not reached, then continue monitoring
-                    if (DateTime.Now - _processStarTime < _maxMinutesLife) continue;
+                    if (DateTime.Now - _processStarTime < _maxMinutesLife)
+                    {
+                        Console.WriteLine("Verification completed. The maximum lifetime has not been reached. The process continues to run.");
+                        await Task.Delay(_schedulerTime); continue;
+                    }
 
                     KillProcessAndSendResults(_processName);
                     CleanProcessStartTime();
-                    Task.Delay(DelayTime);
+                    await Task.Delay(DelayTime);
                 }
             });
         }
@@ -99,11 +110,11 @@ namespace VeeamTask.MonitorApp
         private static void KillProcessAndSendResults(string processName)
         {
             if(!ProcessHelper.CheckProcessStart(processName))
-                Console.WriteLine($"Process {processName} is not running.\r\n");
+                Console.WriteLine($"Process {processName} is not running.");
             else
             {
                 ProcessHelper.KillAllProcess(_processName);
-                Console.Write($"Process {_processName} has been killed.\r\n");
+                Console.WriteLine($"Process {_processName} has been killed.");
             }
         }
 

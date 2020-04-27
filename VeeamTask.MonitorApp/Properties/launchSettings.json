@@ -2,7 +2,7 @@
   "profiles": {
     "VeeamTask.MonitorApp": {
       "commandName": "Project",
-      "commandLineArgs": "chromedriver 1 1"
+      "commandLineArgs": "chromedriver 1 3"
     }
   }
 }

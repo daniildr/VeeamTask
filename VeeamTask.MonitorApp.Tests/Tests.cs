@@ -9,12 +9,11 @@ namespace VeeamTask.MonitorApp.Tests
 {
     public class Tests : IDisposable
     {
-        private string Output;
+        private static string _output;
 
-        public Tests()
-        {
-            
-        }
+        private readonly DataReceivedEventHandler _eventHandler = new DataReceivedEventHandler((sender, e) => _output += e.Data);
+        private readonly string _appPath = Path.Combine(Path.GetDirectoryName(Assembly.GetAssembly(typeof(ProcessHelper)).Location),
+        "VeeamTask.MonitorApp.exe").Replace(".Tests", "");
 
         [Theory]
         [InlineData("chromeDriver", "1", "2", "3")]
@@ -31,23 +30,40 @@ namespace VeeamTask.MonitorApp.Tests
         [Fact]
         public void CheckProcessAlreadyStarted()
         {
-            var eventHandler = new DataReceivedEventHandler((sender, e) => Output += e.Data);
-
-            var appPath = Path.Combine(Path.GetDirectoryName(Assembly.GetAssembly(typeof(ProcessHelper)).Location),
-                "VeeamTask.MonitorApp.exe").Replace(".Tests", "");
-
             ProcessHelper.StartProcess("cmd.exe");
             System.Threading.Thread.Sleep(2000);
-            ProcessHelper.StartProcess(appPath, eventHandler, "cmd", "1", "1");
+            ProcessHelper.StartProcess(_appPath, _eventHandler, "cmd", "1", "1");
 
             System.Threading.Thread.Sleep(120000);
-            Assert.Contains("The process is already running", Output);
+            Assert.Contains("The process is already running", _output);
         }
 
+        [Fact]
+        public void CheckProcessKilling()
+        {
+            ProcessHelper.StartProcess(_appPath, _eventHandler, "cmd", "1", "1");
+            ProcessHelper.StartProcess("cmd.exe");
+            System.Threading.Thread.Sleep(2000);
+
+            System.Threading.Thread.Sleep(120000);
+            Assert.Contains("has been killed", _output);
+            Assert.Contains("Process stopped", _output);
+        }
+
+        [Fact]
+        public void CheckReceiveProcessAfterStart()
+        {
+            ProcessHelper.StartProcess(_appPath, _eventHandler, "cmd", "1", "1");
+            ProcessHelper.StartProcess("cmd.exe");
+            System.Threading.Thread.Sleep(2000);
+
+            System.Threading.Thread.Sleep(120000);
+            Assert.Contains("Process started", _output);
+        }
 
         public void Dispose()
         {
-            Output = null;
+            _output = null;
             ProcessHelper.KillAllProcess("cmd");
             ProcessHelper.KillAllProcess("VeeamTask.MonitorApp");
         }
